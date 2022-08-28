@@ -11,8 +11,9 @@ export const userLogin = async (event: React.FormEvent<HTMLFormElement>) => {
         password: password
     })
 
-    const response = await fetch('http://localhost:5000/login', {
+    const response = await fetch('/api/login', {
       method: 'POST',
+      credentials: 'same-origin',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'

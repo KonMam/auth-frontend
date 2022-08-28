@@ -1,5 +1,3 @@
-import { useFetch } from "../hooks/useFetch"
-
 export default function Login() {
 
     return (

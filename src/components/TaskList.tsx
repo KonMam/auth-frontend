@@ -1,22 +1,19 @@
 import { useFetch } from "../hooks/useFetch"
-import { Users } from "../types/types"
+import { ToDos } from "../types/types"
 
 
 export default function TaskList() {
 
-    const {loading, data} = useFetch<Users>('/db-test')
+    const {loading, data} = useFetch<ToDos>('/tasks')
 
     return (
-        <div className="Login">
-            <ul>
+        <div className="TaskList">
             {!loading ? 
-                data?.map( ( user ) => 
-            <li key={user.id}>
-              {user.id}. Name: {user.email} Email: {user.password}
+                data?.map( ( todo ) => 
+            <li key={todo.id}>
+              {todo.text}, status: {todo.status.toString()}
             </li>) : 
-            <li>Loading</li>
-        }
-            </ul>
+            <li>Loading</li>}
         </div>
     )
 }

@@ -11,3 +11,10 @@ export type TApiResponse<T> = {
     error: any;
     loading: Boolean;
 };
+
+export type ToDos = [{
+    id: number,
+    userId: number
+    text: string,
+    status: boolean
+}];

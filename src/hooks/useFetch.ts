@@ -13,7 +13,7 @@ export const useFetch = <T extends any>(endpoint: string): TApiResponse<T | unde
     const getAPIData = async () => {
       setLoading(true);
       try {
-        const apiResponse = await fetch(`http://localhost:5000${endpoint}`);
+        const apiResponse = await fetch(`/api${endpoint}`);
         const json = await apiResponse.json();
 
         setStatus(apiResponse.status);

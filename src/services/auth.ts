@@ -1,7 +1,4 @@
-
-export const userLogin = async (event: React.FormEvent<HTMLFormElement>) => {
-
-    event.preventDefault()
+export const userLogin = async (credentials) => {
 
     const email: string = (<HTMLInputElement>document.getElementById('email')).value
     const password: string = (<HTMLInputElement>document.getElementById('password')).value

@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useState } from "react";
 import { Credentials } from '../types/types'
 
-async function loginUser(credentials: Credentials) {
-    return fetch('/api/login', {
+async function registerUser(credentials: Credentials) {
+    return fetch('/api/signup', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -12,7 +12,8 @@ async function loginUser(credentials: Credentials) {
       .then(data => data.json())
    }
 
-export default function Login({childToParent}  : {childToParent:any}) {
+
+export default function Register({childToParent}  : {childToParent:any}) {
 
     const [email, setEmail] = useState<string>();
     const [password, setPassword] = useState<string>();
@@ -21,7 +22,7 @@ export default function Login({childToParent}  : {childToParent:any}) {
         e.preventDefault();
 
         if (email && password) {
-            await loginUser({
+            await registerUser({
                 email,
                 password
             });
@@ -31,8 +32,8 @@ export default function Login({childToParent}  : {childToParent:any}) {
     }
 
     return (
-        <div className="Login">
-            <h1>Login:</h1>
+        <div className="Register">
+            <h1>Register:</h1>
             <form onSubmit={handleSubmit}>
                 <label htmlFor="email" >Email</label>
                 <input name="email" id="email" onChange={e => setEmail(e.target.value)}></input>

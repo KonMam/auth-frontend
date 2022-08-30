@@ -18,3 +18,8 @@ export type ToDos = [{
     text: string,
     status: boolean
 }];
+
+export type Credentials = {
+    email: string
+    password: string
+}

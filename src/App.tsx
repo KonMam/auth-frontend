@@ -3,17 +3,18 @@ import './App.css';
 import Login from './components/Login';
 import TaskList from './components/TaskList';
 import { useState } from 'react';
+import Register from './components/Register';
 
 
 function App() {
 
-  const [ token, setToken ] = useState<string>()
+  const [ authentication, setAuthentication ] = useState<boolean>()
 
-  const childToParent = (childdata: string) => {
-    setToken(childdata);
+  const childToParent = (childdata: boolean) => {
+    setAuthentication(childdata);
   }
 
-  if(!token) {
+  if(!authentication) {
     return <Login childToParent={childToParent}/>
   }
 

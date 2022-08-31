@@ -5,6 +5,12 @@ import TaskList from './components/TaskList';
 import { useState } from 'react';
 import Register from './components/Register';
 
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+} from "react-router-dom";
+
 
 function App() {
 
@@ -14,13 +20,20 @@ function App() {
     setAuthentication(childdata);
   }
 
-  if(!authentication) {
-    return <Login childToParent={childToParent}/>
+  if(authentication) {
+    return <TaskList/>
   }
 
   return (
-    <TaskList/>
-  )
+    <div className='App'>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<h1>Home</h1>}></Route>
+          <Route path="/login" element={<Login childToParent={childToParent}/>}></Route>
+          <Route path="/register" element={<Register childToParent={childToParent}/>}></Route>
+        </Routes>
+      </BrowserRouter>
+    </div>)
 }
 
 export default App

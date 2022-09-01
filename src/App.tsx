@@ -21,8 +21,13 @@ function App() {
   }
 
   if(authentication) {
-    return <TaskList/>
-  }
+    return (
+    <BrowserRouter>
+        <Routes>
+          <Route path="/tasks" element={<TaskList/>}></Route>
+        </Routes>
+    </BrowserRouter>
+  )};
 
   return (
     <div className='App'>
@@ -33,7 +38,7 @@ function App() {
           <Route path="/register" element={<Register childToParent={childToParent}/>}></Route>
         </Routes>
       </BrowserRouter>
-    </div>)
-}
+    </div>
+)};
 
 export default App

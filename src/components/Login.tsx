@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Credentials } from '../types/types'
 
 async function loginUser(credentials: Credentials) {
@@ -16,6 +17,7 @@ export default function Login({childToParent}  : {childToParent:any}) {
 
     const [email, setEmail] = useState<string>();
     const [password, setPassword] = useState<string>();
+    const navigate = useNavigate()
     
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -27,6 +29,7 @@ export default function Login({childToParent}  : {childToParent:any}) {
             });
 
             childToParent(true)
+            navigate("/tasks")
         }
     }
 

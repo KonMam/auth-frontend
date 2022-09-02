@@ -13,7 +13,7 @@ async function loginUser(credentials: Credentials) {
       .then(data => data.json())
    }
 
-export default function Login({childToParent}  : {childToParent:any}) {
+export default function Login() {
 
     const [email, setEmail] = useState<string>();
     const [password, setPassword] = useState<string>();
@@ -27,8 +27,6 @@ export default function Login({childToParent}  : {childToParent:any}) {
                 email,
                 password
             });
-
-            childToParent(true)
             navigate("/tasks")
         }
     }

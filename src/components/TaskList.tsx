@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { useFetch } from "../hooks/useFetch"
 import { ToDos } from "../types/types"
 
@@ -8,6 +9,17 @@ async function refreshToken() {
       headers: {
         'Content-Type': 'application/json'
       }
+    })
+      .then(data => data.json())
+}
+
+async function createTask(text: {text: string}) {
+    return fetch('/api/tasks', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(text)
     })
       .then(data => data.json())
 }
@@ -23,14 +35,33 @@ export default function TaskList() {
     }
     handleExpired()
 
+    const [text, setText] = useState<string>();
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+
+        if (text) {
+            await createTask(
+                {text}
+            );
+        }
+    }
     return (
-        <div className="TaskList">
-            {!loading ? 
-                data?.map( ( todo ) => 
-            <li key={todo.id}>
-              {todo.text}, status: {todo.status.toString()}
-            </li>) : 
-            <li>Loading</li>}
+        <div>
+            <div className="TaskList">
+                {!loading ? 
+                    data?.map( ( todo ) => 
+                <li key={todo.id}>
+                {todo.text}, status: {todo.status.toString()}
+                </li>) : 
+                <li>Loading</li>}
+            </div>
+            <div className="TaskForm">
+            <form onSubmit={handleSubmit}>
+                <label htmlFor="text">New Task: </label>
+                <input name="text" id="text" onChange={e => setText(e.target.value)}></input>
+                <button type="submit" value="Submit">Submit</button>
+            </form>
+            </div>
         </div>
     )
 }

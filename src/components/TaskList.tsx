@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useFetch } from "../hooks/useFetch"
 import { ToDos } from "../types/types"
-
+import '../styles/TaskList.css'
 
 async function refreshToken() {
     return fetch('/api/refresh', {
@@ -47,20 +47,20 @@ export default function TaskList() {
     }
     return (
         <div>
-            <div className="TaskList">
-                {!loading ? 
-                    data?.map( ( todo ) => 
-                <li key={todo.id}>
-                {todo.text}, status: {todo.status.toString()}
-                </li>) : 
-                <li>Loading</li>}
-            </div>
             <div className="TaskForm">
             <form onSubmit={handleSubmit}>
                 <label htmlFor="text">New Task: </label>
                 <input name="text" id="text" onChange={e => setText(e.target.value)}></input>
                 <button type="submit" value="Submit">Submit</button>
             </form>
+            </div>
+            <div className="TaskList">
+                {!loading ? 
+                    data?.map( ( todo ) => 
+                <li key={todo.id} className="list-element">
+                {todo.text} <br/>{todo.status === false ? "Status: ✘": "Status: ✓"}
+                </li>) : 
+                <li>Loading</li>}
             </div>
         </div>
     )

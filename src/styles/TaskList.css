@@ -1,0 +1,16 @@
+.TaskList {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+li {
+    list-style: none;
+}
+
+.list-element {
+    padding: 0 3em;
+    margin: 1em;
+    background-color: rgb(58, 58, 58);
+    border-radius: 5px;
+    width: 20%;
+}

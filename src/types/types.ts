@@ -20,6 +20,7 @@ export type ToDos = [{
 }];
 
 export type Credentials = {
+    username?: string
     email: string
     password: string
 }

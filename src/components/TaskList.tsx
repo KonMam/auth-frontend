@@ -1,5 +1,4 @@
-import { useState } from "react"
-import { useFetch } from "../hooks/useFetch"
+import { useEffect, useState } from "react"
 import { ToDos } from "../types/types"
 import '../styles/TaskList.css'
 
@@ -10,58 +9,79 @@ async function refreshToken() {
         'Content-Type': 'application/json'
       }
     })
-      .then(data => data.json())
+    .then(data => data.json())
 }
 
-async function createTask(text: {text: string}) {
-    return fetch('/api/tasks', {
+async function changeStatus(taskId: number, status: boolean) {
+    return fetch(`/api/tasks/${taskId}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(text)
+      body: JSON.stringify({status: !status}) 
     })
-      .then(data => data.json())
+    .then(data => data.json())
 }
 
 export default function TaskList() {
+  const [status, setStatus] = useState<number>(0);
+  const [statusText, setStatusText] = useState<string>('');
+  const [data, setData] = useState<ToDos | undefined>();
+  const [error, setError] = useState<any>();
+  const [loading, setLoading] = useState<boolean>(true);
 
-    const {loading, data, status} = useFetch<ToDos>('/tasks')
+  const getAPIData = async () => {
+    try {
+      const apiResponse = await fetch(`/api/tasks`)
 
-    const handleExpired = async () => {
-        if (status === 401) {
-            await refreshToken()
-        }
+      setStatus(apiResponse.status)
+      setStatusText(apiResponse.statusText)
+      
+      const json = await apiResponse.json()
+
+      setData(json)
+    } catch (error) {
+      setError(error)
     }
-    handleExpired()
+    setLoading(false)
+  };
+  useEffect(() => {getAPIData()}, [])
 
-    const [text, setText] = useState<string>();
-
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-
-        if (text) {
-            await createTask(
-                {text}
-            );
-        }
+  const handleExpiredToken = async () => {
+    if (status === 401) {
+        await refreshToken()
     }
-    return (
-        <div>
-            <div className="TaskForm">
-            <form onSubmit={handleSubmit}>
-                <label htmlFor="text">New Task: </label>
-                <input name="text" id="text" onChange={e => setText(e.target.value)}></input>
-                <button type="submit" value="Submit">Submit</button>
-            </form>
-            </div>
-            <div className="TaskList">
-                {!loading ? 
-                    data?.map( ( todo ) => 
-                <li key={todo.id} className="list-element">
-                {todo.text} <br/>{todo.status === false ? "Status: ✘": "Status: ✓"}
-                </li>) : 
-                <li>Loading</li>}
-            </div>
-        </div>
-    )
+  }
+  handleExpiredToken()
+
+  const handleStatusChange = async (taskId: number, status: boolean) => {
+          await changeStatus(taskId, status)
+
+          const newData: any = data!.map((todo) => {
+            if (todo.id === taskId) {
+              const updatedItem = {
+                ...todo,
+                status: !status,
+              };
+              return updatedItem;
+            }
+            return todo;
+          });
+
+          setData(newData)
+      }
+
+  return (
+      <div className="TaskList">
+          {!loading ? data?.map( ( todo ) => 
+          <li key={todo.id} className="list-element">
+              <button className="delete-button">Delete</button>
+              <p>{todo.status === false ? "Status: ✘": "Status: ✓"}</p>
+              <p className="task">{todo.text}</p>
+              <button className="complete-button" onClick={() => handleStatusChange(todo.id, todo.status)}>Complete Task</button>
+              <br/>
+          </li>) : 
+          <li>Loading</li>}
+      </div>
+  )
 }

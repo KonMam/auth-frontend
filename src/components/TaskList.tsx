@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { ToDos } from "../types/types"
 import '../styles/TaskList.css'
 
-async function refreshToken() {
+const refreshToken = async () => {
     return fetch('/api/refresh', {
       method: 'POST',
       headers: {
@@ -12,7 +12,7 @@ async function refreshToken() {
     .then(data => data.json())
 }
 
-async function changeStatus(taskId: number, status: boolean) {
+const changeStatus = async (taskId: number, status: boolean) => {
     return fetch(`/api/tasks/${taskId}`, {
       method: 'POST',
       headers: {
@@ -21,6 +21,16 @@ async function changeStatus(taskId: number, status: boolean) {
       body: JSON.stringify({status: !status}) 
     })
     .then(data => data.json())
+}
+
+const deleteTask = async (taskId: number) => {
+  return fetch(`/api/tasks/${taskId}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+  .then(data => data.json())
 }
 
 export default function TaskList() {
@@ -45,37 +55,47 @@ export default function TaskList() {
     }
     setLoading(false)
   };
-  useEffect(() => {getAPIData()}, [])
-
+  
   const handleExpiredToken = async () => {
     if (status === 401) {
         await refreshToken()
     }
   }
-  handleExpiredToken()
-
+  
   const handleStatusChange = async (taskId: number, status: boolean) => {
-          await changeStatus(taskId, status)
+    await changeStatus(taskId, status)
 
-          const newData: any = data!.map((todo) => {
-            if (todo.id === taskId) {
-              const updatedItem = {
-                ...todo,
-                status: !status,
-              };
-              return updatedItem;
-            }
-            return todo;
-          });
-
-          setData(newData)
+    const newData: any = data!.map((todo) => {
+      if (todo.id === taskId) {
+        const updatedItem = {
+          ...todo,
+          status: !status,
+        };
+        return updatedItem;
       }
+      return todo;
+    });
+
+    setData(newData)
+  }
+
+  const handleDeleteTask = async (taskId: number) => {
+    await deleteTask(taskId)
+
+    const filtered: any = data?.filter(todo => {
+      return todo.id !== taskId;
+    });
+    setData(filtered);
+  }
+
+  useEffect(() => {getAPIData()}, [])
+  handleExpiredToken()
 
   return (
       <div className="TaskList">
           {!loading ? data?.map( ( todo ) => 
           <li key={todo.id} className="list-element">
-              <button className="delete-button">Delete</button>
+              <button className="delete-button" onClick={() => handleDeleteTask(todo.id)}>Delete</button>
               <p>{todo.status === false ? "Status: ✘": "Status: ✓"}</p>
               <p className="task">{todo.text}</p>
               <button className="complete-button" onClick={() => handleStatusChange(todo.id, todo.status)}>Complete Task</button>

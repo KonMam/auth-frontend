@@ -1,16 +1,53 @@
-.TaskList {
+.box {
     display: flex;
     flex-wrap: wrap;
+    border-radius: 5px;
+    margin: 1em;
 }
 
-li {
-    list-style: none;
+.box>* {
+    flex: 1 0 33.3333%;
 }
 
 .list-element {
-    padding: 0 3em;
+    position: relative;
+    background-color: rgba(255, 255, 255, 0.836);
+    border-radius: 2px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 2px 4px;
+    padding: 1em;
     margin: 1em;
-    background-color: rgb(58, 58, 58);
-    border-radius: 5px;
-    width: 20%;
+}
+
+.delete-button {
+    position: absolute;
+    top: 1em;
+    right: 1em;
+}
+
+.complete-button {
+    background-color: #05a37477;
+    position: absolute;
+    bottom: 1em;
+    right: 1em;
+    width: 120px;
+}
+
+.task-status {
+    position: absolute;
+    top: 0.1em;
+    left: 1em;
+}
+
+.task-text {
+    margin: 2em 0;
+    padding: 0.5em 0;
+    font-size: 1.2em;
+    font-weight: 600;
+}
+
+button {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border: 0;
+    font-weight: 700;
+    padding: 0.5em;
 }

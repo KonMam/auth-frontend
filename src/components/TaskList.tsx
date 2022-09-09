@@ -33,6 +33,17 @@ const deleteTask = async (taskId: number) => {
   .then(data => data.json())
 }
 
+async function createTask(text: {text: string}) {
+  return fetch('/api/tasks', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(text)
+  })
+    .then(data => data.json())
+}
+
 export default function TaskList() {
   const [status, setStatus] = useState<number>(0);
   const [statusText, setStatusText] = useState<string>('');
@@ -88,20 +99,40 @@ export default function TaskList() {
     setData(filtered);
   }
 
+
+  const [text, setText] = useState<string>();
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+
+    if (text) {
+        await createTask(
+            {text}
+        );
+    }
+}
+
   useEffect(() => {getAPIData()}, [])
   handleExpiredToken()
 
   return (
-      <div className="TaskList">
+  <div className="test">
+    <div className="TaskForm">
+    <form onSubmit={handleSubmit}>
+        <label htmlFor="text">New Task: </label>
+        <input name="text" id="text" onChange={e => setText(e.target.value)}></input>
+        <button type="submit" value="Submit">Submit</button>
+    </form>
+    </div>
+      <div className="box">
           {!loading ? data?.map( ( todo ) => 
-          <li key={todo.id} className="list-element">
-              <button className="delete-button" onClick={() => handleDeleteTask(todo.id)}>Delete</button>
-              <p>{todo.status === false ? "Status: ✘": "Status: ✓"}</p>
-              <p className="task">{todo.text}</p>
-              <button className="complete-button" onClick={() => handleStatusChange(todo.id, todo.status)}>Complete Task</button>
+          <div key={todo.id} className="list-element">
+              <button className="delete-button" onClick={() => handleDeleteTask(todo.id)}>🗑️</button>
+              <p className="task-status">{todo.status === false ? "❌": "✔️"}</p>
+              <p className="task-text">{todo.text}</p>
+              <button className="complete-button" onClick={() => handleStatusChange(todo.id, todo.status)}>{ todo.status === false ? 'Check Task' : 'Uncheck Task'}</button>
               <br/>
-          </li>) : 
+          </div>) : 
           <li>Loading</li>}
+      </div>
       </div>
   )
 }

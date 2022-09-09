@@ -2,7 +2,6 @@ import './App.css';
 
 import Login from './components/Login';
 import TaskList from './components/TaskList';
-import { useState } from 'react';
 import Register from './components/Register';
 
 import {

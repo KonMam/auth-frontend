@@ -20,7 +20,7 @@
 
 .task-status {
     position: absolute;
-    top: 0.1em;
+    top: 1em;
     left: 1em;
 }
 
@@ -62,9 +62,10 @@
 
 #complete-button {
     position: absolute;
-    background-color: #05a37477;
+    background-color: #2205a38c;
     border-radius: 2px;
     bottom: 1em;
     right: 1em;
     width: 120px;
+    border-radius: 2px;
 }

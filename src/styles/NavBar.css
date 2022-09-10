@@ -1,0 +1,24 @@
+.nav {
+    position: -webkit-sticky;
+	position: sticky;
+	top: 0;
+    display: flex;
+    background-color: rgba(255, 255, 255, 0.836);
+    justify-content: space-between;
+}
+
+.nav-element {
+    margin: 1em;
+    font-weight: 600;
+}
+
+.nav-links {
+    display: flex;
+}
+
+.nav-logo {
+    margin: auto 1em;
+    font-weight: 600;
+    font-size: 1.8em;
+    color: #2205a38c;
+}

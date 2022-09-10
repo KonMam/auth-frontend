@@ -1,4 +1,11 @@
+* { margin: 0; padding: 0; }
+
 #root {
   margin: 0 auto;
   font-family: 'Montserrat', sans-serif;
+}
+
+a {
+  text-decoration: none;
+  color: black;
 }

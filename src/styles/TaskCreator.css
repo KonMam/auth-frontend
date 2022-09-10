@@ -29,11 +29,11 @@
 }
 
 #create-task-button {
-    background-color: #05a37477;
+    background-color: #2205a38c;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     border-radius: 2px;
     border: 0;
     width: 25%;
-    height: 90%;
+    height: 1.5rem;
     margin: auto 0;
 }

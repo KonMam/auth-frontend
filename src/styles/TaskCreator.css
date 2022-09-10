@@ -1,0 +1,39 @@
+.task-creator {
+    display: flex;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.836);
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 2px 4px;
+    width: 30vw;
+    margin: 2em auto;
+    padding: 2em;
+}
+
+.create-task-element {
+    font-family: inherit;
+    font-weight: 600;
+
+    margin: 0 1em;
+    height: 2em;
+}
+
+#create-task-input {
+    width: 70%;
+    background-color: white;
+    border: 1;
+    resize: none;
+    font-size: 1em;
+}
+
+#create-task-input:focus {
+    outline: 0;
+}
+
+#create-task-button {
+    background-color: #05a37477;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    border-radius: 2px;
+    border: 0;
+    width: 25%;
+    height: 90%;
+    margin: auto 0;
+}

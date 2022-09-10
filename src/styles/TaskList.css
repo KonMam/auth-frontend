@@ -12,24 +12,10 @@
 .list-element {
     position: relative;
     background-color: rgba(255, 255, 255, 0.836);
-    border-radius: 2px;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 2px 4px;
+    border-radius: 2px;
     padding: 1em;
     margin: 1em;
-}
-
-.delete-button {
-    position: absolute;
-    top: 1em;
-    right: 1em;
-}
-
-.complete-button {
-    background-color: #05a37477;
-    position: absolute;
-    bottom: 1em;
-    right: 1em;
-    width: 120px;
 }
 
 .task-status {
@@ -39,15 +25,46 @@
 }
 
 .task-text {
-    margin: 2em 0;
-    padding: 0.5em 0;
+    background: transparent;
+    border-radius: 2px;
+    border: none;
+
+    width:100%;
+    resize: none;
+
+    font-family: inherit;
+    font-size: inherit;
     font-size: 1.2em;
     font-weight: 600;
+    
+    margin: 2em 0;
+    padding: 0.5em 0;
 }
 
-button {
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+.task-text:focus {
+    background-color: white;
+    outline: none 
+}
+
+.tasks-button {
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     border: 0;
     font-weight: 700;
     padding: 0.5em;
+}
+
+#delete-button {
+    position: absolute;
+    background: transparent;
+    top: 1em;
+    right: 1em;
+}
+
+#complete-button {
+    position: absolute;
+    background-color: #05a37477;
+    border-radius: 2px;
+    bottom: 1em;
+    right: 1em;
+    width: 120px;
 }

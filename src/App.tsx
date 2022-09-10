@@ -1,7 +1,6 @@
 import './App.css';
 
 import Login from './components/Login';
-import TaskList from './components/TaskList';
 import Register from './components/Register';
 
 import {
@@ -9,6 +8,7 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
+import Board from './components/Board';
 
 
 function App() {
@@ -21,7 +21,7 @@ function App() {
           <Route path="/" element={<h1>Home</h1>}></Route>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/register" element={<Register />}></Route>
-          <Route path="/tasks" element={<TaskList />}></Route>
+          <Route path="/tasks" element={<Board />}></Route>
         </Routes>
       </BrowserRouter>
     </div>

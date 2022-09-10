@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { ToDos } from "../types/types"
 import '../styles/TaskList.css'
+import { useNavigate } from "react-router-dom"
 
 const refreshToken = async () => {
     return fetch('/api/refresh', {
@@ -59,6 +60,7 @@ export default function TaskList() {
     const handleExpiredToken = async () => {
         if (status === 401) {
             await refreshToken()
+            getAPIData()
         }
     }
     
@@ -105,7 +107,13 @@ export default function TaskList() {
         setData(newData)
     }
 
-    useEffect(() => {getAPIData()}, [])
+    useEffect(() => {
+        const loggedInUser = localStorage.getItem("user");
+        if (loggedInUser) {
+            getAPIData()
+        }
+    }, [])
+
     handleExpiredToken()
 
     return (

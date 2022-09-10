@@ -11,35 +11,69 @@ async function loginUser(credentials: Credentials) {
       },
       body: JSON.stringify(credentials)
     })
-      .then(data => data.json())
    }
 
 export default function Login() {
 
+    const navigate = useNavigate()
+
     const [email, setEmail] = useState<string>();
     const [password, setPassword] = useState<string>();
-    const navigate = useNavigate()
+
+    const [responseStatus, setResponseStatus] = useState<number>(0)
     
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         if (email && password) {
-            await loginUser({
+            const response = await loginUser({
                 email,
                 password
             });
-            navigate("/tasks")
+            const data = await response.json()
+
+            setResponseStatus(response.status)
+            if (responseStatus === 401) {
+                navigate('/login')
+            }
+            
+            if (responseStatus === 200) {
+                localStorage.setItem('user', data)
+                navigate("/tasks")
+            }
         }
     }
 
     return (
-        <div className="login-form">
-            <hr className='line'></hr>
-            <h2 className='header'>Login</h2>
-            <form onSubmit={handleSubmit} className='login-details'>
-                <input name="email" id="email" className="form-element" placeholder="Email" onChange={e => setEmail(e.target.value)}></input>
-                <input name="password" id="password" className="form-element" placeholder="Password" type="password" onChange={e => setPassword(e.target.value)}></input>
-                <button type="submit" value="Submit" id="button" className="form-element">Submit</button>
+        <div className='login-box'>
+            <form onSubmit={handleSubmit} className='login-form'>
+                <h2 
+                    id='login-heading' 
+                    className="login-form-element">
+                    Login
+                </h2>
+                <input 
+                    name="email" 
+                    id="email" 
+                    className="login-form-element" 
+                    placeholder="Email" 
+                    onChange={e => setEmail(e.target.value)}>
+                </input>
+                <input 
+                    name="password" 
+                    id="password" 
+                    className="login-form-element" 
+                    placeholder="Password" 
+                    type="password" 
+                    onChange={e => setPassword(e.target.value)}>
+                </input>
+                <button 
+                    type="submit" 
+                    value="Submit" 
+                    id="login-button" 
+                    className="login-form-button">
+                    Submit
+                </button>
             </form>
         </div>
     )

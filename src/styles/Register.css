@@ -1,33 +1,41 @@
 
+.register-box {
+    height: 500px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .register-form {
-    width: 500px;
     display: flex;
     flex-direction: column;
-    background-color: rgb(58, 58, 58);
+    background-color: rgba(255, 255, 255, 0.836);
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 2px 4px;
+    width: 30vw;
     padding: 3em;
-    border-radius: 10px;
 }
 
-.register-details {
-    display: flex;
-    flex-direction: column;
+.register-form-element {
+    font-family: inherit;
+    font-weight: 600;
+    resize: none;
+    font-size: 1em;
+    margin: 0.8em 0;
 }
 
-.form-element {
+.register-form-button {
+    align-self: flex-end;
     margin: 1em 0;
-    padding: 0;
-    height: 2em;
-}
-
-.header {
-    color: #d89c2d;
-}
-
-.line {
+    background-color: #2205a38c;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    border-radius: 2px;
     border: 0;
-    clear:both;
-    display:block;
-    width: 96%;               
-    background-color:#d89c2d;
-    height: 1px;
+    width: 25%;
+    height: 1.5rem;
+}
+
+#register-heading {
+    margin: 0;
+    font-size: 1.8em;
 }

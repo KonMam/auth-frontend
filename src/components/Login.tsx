@@ -34,7 +34,7 @@ export default function Login() {
 
             setResponseStatus(response.status)
             if (responseStatus === 401) {
-                navigate('/login')
+                alert('Incorrect User Details.')
             }
             
             if (responseStatus === 200) {
@@ -67,13 +67,22 @@ export default function Login() {
                     type="password" 
                     onChange={e => setPassword(e.target.value)}>
                 </input>
+                <div className='login-buttons'>
+                <button 
+                    value="Sign-Up" 
+                    id="login-reg-button" 
+                    className="login-form-button"
+                    onClick={() => navigate('/register')}>
+                    Sign Up
+                </button>
                 <button 
                     type="submit" 
                     value="Submit" 
-                    id="login-button" 
+                    id="login-login-button" 
                     className="login-form-button">
                     Submit
                 </button>
+                </div>
             </form>
         </div>
     )

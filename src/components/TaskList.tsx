@@ -13,6 +13,15 @@ const refreshToken = async () => {
     .then(data => data.json())
 }
 
+const getData = async () => {
+    return fetch('/api/tasks', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      })
+}
+
 const changeData = async (taskId: number, status: boolean, text: string) => {
     return fetch(`/api/tasks/${taskId}`, {
       method: 'POST',
@@ -36,23 +45,20 @@ const deleteTask = async (taskId: number) => {
 
 export default function TaskList() {
     const [status, setStatus] = useState<number>(0);
-    const [statusText, setStatusText] = useState<string>('');
     const [data, setData] = useState<ToDos | undefined>();
     const [error, setError] = useState<any>();
     const [loading, setLoading] = useState<boolean>(true);
 
     const getAPIData = async () => {
         try {
-        const apiResponse = await fetch(`/api/tasks`)
-
-        setStatus(apiResponse.status)
-        setStatusText(apiResponse.statusText)
-        
-        const json = await apiResponse.json()
-
-        setData(json)
-        } catch (error) {
-        setError(error)
+            const response = await getData()
+            setStatus(response.status)
+            
+            const data = await response.json()
+            setData(data)
+        } catch (err) {
+            setError(err)
+            console.log(error)
         }
         setLoading(false)
     };
@@ -68,14 +74,14 @@ export default function TaskList() {
         await changeData(taskId, !status, text)
 
         const newData: any = data!.map((todo) => {
-        if (todo.id === taskId) {
-            const updatedItem = {
-            ...todo,
-            status: !status,
-            };
-            return updatedItem;
-        }
-        return todo;
+            if (todo.id === taskId) {
+                const updatedItem = {
+                ...todo,
+                status: !status,
+                };
+                return updatedItem;
+            }
+            return todo;
         });
 
         setData(newData)
@@ -85,8 +91,9 @@ export default function TaskList() {
         await deleteTask(taskId)
 
         const filtered: any = data?.filter(todo => {
-        return todo.id !== taskId;
+            return todo.id !== taskId;
         });
+
         setData(filtered);
     }
 
@@ -94,14 +101,14 @@ export default function TaskList() {
         await changeData(taskId, status, text)
 
         const newData: any = data!.map((todo) => {
-        if (todo.id === taskId) {
-            const updatedItem = {
-            ...todo,
-            text: text,
-            };
-            return updatedItem;
-        }
-        return todo;
+            if (todo.id === taskId) {
+                const updatedItem = {
+                ...todo,
+                text: text,
+                };
+                return updatedItem;
+            }
+            return todo;
         });
 
         setData(newData)

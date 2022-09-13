@@ -24,6 +24,11 @@
     margin: 0.8em 0;
 }
 
+.login-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
 .login-form-button {
     align-self: flex-end;
     margin: 1em 0;
